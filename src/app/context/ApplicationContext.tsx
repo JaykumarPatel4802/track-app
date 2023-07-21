@@ -4,11 +4,13 @@ import { createContext, useContext, Dispatch, SetStateAction, useState, useMemo,
 interface IApplicationContext {
     applications: Application[];
     addApplication: (application: Application) => void;
+    setApplications: (applications: Application[]) => void;
 }
 
 export const ApplicationContext = createContext<IApplicationContext>({
     applications: [],
     addApplication: (application) => {},
+    setApplications: (applications) => {}
 });
 
 export const useApplicationContext = () => useContext(ApplicationContext);

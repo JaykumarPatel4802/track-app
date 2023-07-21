@@ -16,7 +16,7 @@ const ApplicationContextProvider = ({children}: IProps) => {
     };
 
     return (
-        <ApplicationContext.Provider value={{ applications, addApplication }}>
+        <ApplicationContext.Provider value={{ applications, addApplication, setApplications }}>
             {children}
         </ApplicationContext.Provider>
     )

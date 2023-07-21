@@ -1,7 +1,6 @@
 "use client";
 
 import Image from 'next/image';
-// import Application from '@/components/Application';
 import data from '@/data/Data';
 import Applications from '@/components/Applications';
 import State from '@/components/State'
@@ -10,7 +9,6 @@ import Data from '@/data/Data';
 import App from 'next/app';
 import { DataReducer } from './context/DataReducer';
 import { initialData } from './context/DataReducer';
-// import { DataContext, DataDisatchContext } from './context/DataContext';
 import { useContext } from 'react';
 import { useApplicationContext } from './context/ApplicationContext';
 import { Application } from './interfaces';
@@ -18,7 +16,7 @@ import { Application } from './interfaces';
 export default function Home() {
 
 
-  const { applications, addApplication } = useApplicationContext();
+  const { applications, addApplication, setApplications } = useApplicationContext();
 
   const [name, setName]: any = React.useState('')
   const [description, setDescription]: any = React.useState('')
