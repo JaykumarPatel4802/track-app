@@ -6,4 +6,5 @@ export interface Application {
     state: String;
     deadline: String;
     url: String;
+    id: any;
 }

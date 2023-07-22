@@ -12,6 +12,7 @@ import { initialData } from './context/DataReducer';
 import { useContext } from 'react';
 import { useApplicationContext } from './context/ApplicationContext';
 import { Application } from './interfaces';
+import uuid from 'react-uuid';
 
 export default function Home() {
 
@@ -26,7 +27,7 @@ export default function Home() {
   const [url, setUrl]: any = React.useState('')
 
   const CreateApplication = (name: String, description: String, role: String, state: String, deadline: String, url: String) => {
-    addApplication({name, description, role, state, deadline, url});
+    addApplication({name, description, role, state, deadline, url, id: uuid()});
     setName('')
     setDescription('')
     setRole('')

@@ -14,7 +14,7 @@ const ApplicationContextProvider = ({children}: IProps) => {
         // application.id = applications.length;
         setApplications([...applications, application]);
     };
-
+    
     return (
         <ApplicationContext.Provider value={{ applications, addApplication, setApplications }}>
             {children}

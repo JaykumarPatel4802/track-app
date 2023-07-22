@@ -10,32 +10,40 @@ const Applications = (props : any) => {
     console.log("Applications")
     console.log(applications)
 
-    const getApplicationsList = () => {
+    const ApplicationsList = () => {
         if (applications.length == 0) {
             return null;
         }
     
-        let applicationsList = applications.map((item: any) => {
-            console.log("getApplicationsList")
-            return <Application name={item.name} description={item.description} key={Date.now()} />
+        var applicationsList = applications.map((item: any) => {
+            // console.log("getApplicationsList")
+            return <Application name={item.name} description={item.description} key={item.id} />
         })
-        console.log(applicationsList);
+        // console.log(applicationsList);
         return applicationsList;
     }
 
     return (
-        <div>
-            {getApplicationsList()}
-        </div>
+        <table className='table-auto'>
+            <thead>
+                <tr>
+                    <th className='px-4 py-2'>Name</th>
+                    <th className='px-4 py-2'>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {ApplicationsList()}
+            </tbody>
+        </table>
     );
 }
 
 const Application = (props: any) => {
     return (
-        <div>
-            <h1>{props.name}</h1>
-            <p>{props.description}</p>
-        </div>
+        <tr>
+            <td>{props.name}</td>
+            <td>{props.description}</td>
+        </tr>
     );
 }
 
