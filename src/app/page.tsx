@@ -34,15 +34,6 @@ export default function Home() {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
-    handleSubmit();
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const CreateApplication = (name: String, description: String, role: String, state: String, deadline: String, url: String) => {
     addApplication({name, description, role, state, deadline, url, id: uuid()});
     setName('')
@@ -54,7 +45,7 @@ export default function Home() {
   }
 
   const activateButton = () => {
-    if (name != '' && description != '' && role != '' && state != '' && deadline != '' && url != '') {
+    if (name != '' && description != '' && role != '' && state != '' && url != '') {
       return true;
     }
     return false;
@@ -76,12 +67,9 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+      <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between lg:flex">
         <Button type='primary' onClick={showModal}>Add Application</Button>
-        <Modal title="Add Application" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        {/* {createApplicationForm()} */}
-          <AddApplicationForm methods={[setName, setDescription, setRole, setState, setDeadline, setURL]} />
-        </Modal>
+          <AddApplicationForm handleSubmit={handleSubmit} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} methods={[setName, setDescription, setRole, setState, setDeadline, setURL]} />
         <Applications />
       </div>
     </main>
