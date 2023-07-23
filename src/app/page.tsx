@@ -13,6 +13,8 @@ import { useContext } from 'react';
 import { useApplicationContext } from './context/ApplicationContext';
 import { Application } from './interfaces';
 import uuid from 'react-uuid';
+import { Button, Modal } from 'antd';
+import AddApplicationForm from '@/components/AddApplicationForm';
 
 export default function Home() {
 
@@ -24,7 +26,22 @@ export default function Home() {
   const [role, setRole]: any = React.useState('')
   const [state, setState]: any = React.useState('')
   const [deadline, setDeadline]: any = React.useState('')
-  const [url, setUrl]: any = React.useState('')
+  const [url, setURL]: any = React.useState('')
+
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    handleSubmit();
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const CreateApplication = (name: String, description: String, role: String, state: String, deadline: String, url: String) => {
     addApplication({name, description, role, state, deadline, url, id: uuid()});
@@ -33,7 +50,7 @@ export default function Home() {
     setRole('')
     setState('')
     setDeadline('')
-    setUrl('')
+    setURL('')
   }
 
   const activateButton = () => {
@@ -43,59 +60,28 @@ export default function Home() {
     return false;
   }
 
-  const handleNameChange = (event: any) => {
-    setName(event.target.value)
-  }
-
-  const handleDescriptionChange = (event: any) => {
-    setDescription(event.target.value)
-  }
-
-  const handleRoleChange = (event: any) => {
-    setRole(event.target.value)
-  }
-
-  const handleStateChange = (event: any) => {
-    setState(event.target.value)
-  }
-
-  const handleDeadlineChange = (event: any) => {
-    setDeadline(event.target.value)
-  }
-
-  const handleUrlChange = (event: any) => {
-    setUrl(event.target.value)
-  }
-
-  const handleSubmit = (event: any) => {
+  const handleSubmit = () => {
     console.log("handleSubmit")
-    event.preventDefault()
+    console.log(name)
+    console.log(description)
+    console.log(role)
+    console.log(state)
+    console.log(deadline)
+    console.log(url)
+    // event.preventDefault(),
     if (activateButton()) {
       var app = CreateApplication(name, description, role, state, deadline, url);
     }
   }
 
-  const createApplicationForm = () => {
-
-    return (
-      <div >
-          <form>
-              <input onChange={handleNameChange} placeholder="Company Name" value={name} />
-              <input onChange={handleDescriptionChange} placeholder="Description of Role" value={description} />
-              <input onChange={handleRoleChange} placeholder="Name of Role" value={role} />
-              <input onChange={handleStateChange} placeholder="State of Application" value={state} />
-              <input onChange={handleDeadlineChange} placeholder="Deadline" value={deadline} />
-              <input onChange={handleUrlChange} placeholder="Application Url" value={url} />
-              <button onClick={handleSubmit}>Add Application</button>
-          </form>
-      </div>
-    );
-  }
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        {createApplicationForm()}
+        <Button type='primary' onClick={showModal}>Add Application</Button>
+        <Modal title="Add Application" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        {/* {createApplicationForm()} */}
+          <AddApplicationForm methods={[setName, setDescription, setRole, setState, setDeadline, setURL]} />
+        </Modal>
         <Applications />
       </div>
     </main>
