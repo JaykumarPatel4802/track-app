@@ -86,7 +86,7 @@ export default function Home() {
               <input onChange={handleStateChange} placeholder="State of Application" value={state} />
               <input onChange={handleDeadlineChange} placeholder="Deadline" value={deadline} />
               <input onChange={handleUrlChange} placeholder="Application Url" value={url} />
-              <button onClick={handleSubmit}>Search</button>
+              <button onClick={handleSubmit}>Add Application</button>
           </form>
       </div>
     );
@@ -94,9 +94,9 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-          <Applications />
+      <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         {createApplicationForm()}
+        <Applications />
       </div>
     </main>
   )
