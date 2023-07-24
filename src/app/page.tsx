@@ -23,8 +23,8 @@ export default function Home() {
 
   const [name, setName]: any = React.useState('')
   const [description, setDescription]: any = React.useState('')
-  const [role, setRole]: any = React.useState('')
-  const [state, setState]: any = React.useState('')
+  const [type, setType]: any = React.useState('')
+  const [status, setStatus]: any = React.useState('')
   const [deadline, setDeadline]: any = React.useState('')
   const [url, setURL]: any = React.useState('')
 
@@ -34,18 +34,18 @@ export default function Home() {
     setIsModalOpen(true);
   };
 
-  const CreateApplication = (name: String, description: String, role: String, state: String, deadline: String, url: String) => {
-    addApplication({name, description, role, state, deadline, url, id: uuid()});
+  const CreateApplication = (name: String, description: String, type: String, satus: String, deadline: String, url: String) => {
+    addApplication({name, description, type, status, deadline, url, id: uuid()});
     setName('')
     setDescription('')
-    setRole('')
-    setState('')
+    setType('')
+    setStatus('')
     setDeadline('')
     setURL('')
   }
 
   const activateButton = () => {
-    if (name != '' && description != '' && role != '' && state != '' && url != '') {
+    if (name != '' && type != '' && status != '') {
       return true;
     }
     return false;
@@ -55,13 +55,13 @@ export default function Home() {
     console.log("handleSubmit")
     console.log(name)
     console.log(description)
-    console.log(role)
-    console.log(state)
+    console.log(type)
+    console.log(status)
     console.log(deadline)
     console.log(url)
     // event.preventDefault(),
     if (activateButton()) {
-      var app = CreateApplication(name, description, role, state, deadline, url);
+      var app = CreateApplication(name, description, type, status, deadline, url);
     }
   }
 
@@ -69,7 +69,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between lg:flex">
         <Button type='primary' onClick={showModal}>Add Application</Button>
-          <AddApplicationForm handleSubmit={handleSubmit} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} methods={[setName, setDescription, setRole, setState, setDeadline, setURL]} />
+        <AddApplicationForm handleSubmit={handleSubmit} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} methods={[setName, setDescription, setType, setStatus, setDeadline, setURL]} />
         <Applications />
       </div>
     </main>

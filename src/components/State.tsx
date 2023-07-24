@@ -1,4 +1,4 @@
-enum State {
+enum Status {
     Not_Applied,
     Applied,
     Inteview,
@@ -7,4 +7,4 @@ enum State {
     OA
 }
 
-export default State;
+export default Status;

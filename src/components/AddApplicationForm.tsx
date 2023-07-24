@@ -36,8 +36,8 @@ const AddApplicationForm: React.FC = (props: any) => {
         props.methods[1](e.target.value);
     };
 
-    const onChangeRole = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        props.methods[2](e.target.value);
+    const onChangeType = (value: string) => {
+        props.methods[2](value);
     };
 
     const onChangeStatus = (value: string) => {
@@ -92,26 +92,23 @@ const AddApplicationForm: React.FC = (props: any) => {
                     <Input onChange={onChangeName} />
                 </Form.Item>
                 <Form.Item name="type" label="Type">
-                    <Select>
-                        <Select.Option value="full-time">Full-Time</Select.Option>
-                        <Select.Option value="internship">Internship</Select.Option>
-                        <Select.Option value="contractor">Contractor</Select.Option>
+                    <Select onChange={onChangeType}>
+                        <Select.Option value="Full Time">Full-Time</Select.Option>
+                        <Select.Option value="Internship">Internship</Select.Option>
+                        <Select.Option value="Contractor">Contractor</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item name="description" label="Description">
                     <TextArea rows={2} onChange={onChangeDescription} />
                 </Form.Item>
-                <Form.Item name="role" label="Role:">
-                    <Input onChange={onChangeRole}/>
-                </Form.Item>
                 <Form.Item name="status" label="Status">
                     <Select onChange={onChangeStatus}>
-                        <Select.Option value="not-applied">Not Applied</Select.Option>
-                        <Select.Option value="applied">Applied</Select.Option>
-                        <Select.Option value="interview">Interview</Select.Option>
-                        <Select.Option value="offer">Offer</Select.Option>
-                        <Select.Option value="rejected">Rejected</Select.Option>
-                        <Select.Option value="oa">Online Assessment</Select.Option>
+                        <Select.Option value="Not Applied">Not Applied</Select.Option>
+                        <Select.Option value="Applied">Applied</Select.Option>
+                        <Select.Option value="Interview">Interview</Select.Option>
+                        <Select.Option value="Offer">Offer</Select.Option>
+                        <Select.Option value="Rejected">Rejected</Select.Option>
+                        <Select.Option value="OA">Online Assessment</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item name="deadline" label="Deadline">
