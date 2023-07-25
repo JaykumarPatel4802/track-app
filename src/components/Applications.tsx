@@ -8,6 +8,7 @@ import { Button, Space, Table } from 'antd';
 import type { ColumnsType, FilterValue, SorterResult } from 'antd/es/table/interface';
 import { Application } from '@/app/interfaces';
 import { useState } from 'react';
+import { forwardRef, useImperativeHandle } from 'react';
 
 interface DataType {
     key: String,
@@ -19,7 +20,7 @@ interface DataType {
     url: String,
 }
 
-const Applications = (props : any) => {
+const Applications = forwardRef((props, ref)  => {
 
     const {applications} = useApplicationContext();
 
@@ -52,6 +53,8 @@ const Applications = (props : any) => {
     const handleChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('Various parameters', pagination, filters, sorter, extra);
         setFilteredInfo(filters);
+        console.log("sortedInfo: ", sortedInfo);
+        console.log("sorter: ", sorter);
         setSortedInfo(sorter as SorterResult<DataType>);
     };
 
@@ -64,6 +67,13 @@ const Applications = (props : any) => {
         setSortedInfo({});
     };
 
+    useImperativeHandle(ref, () => ({
+        clear() {
+            setFilteredInfo({});
+            setSortedInfo({});
+        }
+    }));
+
     const columns: ColumnsType<DataType> = [
         {
           title: 'Name',
@@ -73,7 +83,7 @@ const Applications = (props : any) => {
             compare: (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
             multiple: 1,
           },
-        //   sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
+          sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
           ellipsis: true,
         },
         {
@@ -94,7 +104,7 @@ const Applications = (props : any) => {
             filteredValue: filteredInfo.type || null,
             onFilter: (value: string, record) => record.type.includes(value),
           //   sorter: (a, b) => a.address.length - b.address.length,
-          //   sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
+            // sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
             ellipsis: true,
         },
         {
@@ -102,17 +112,17 @@ const Applications = (props : any) => {
             dataIndex: 'status',
             key: 'status',
             filters: [
-              { text: 'Not Applied', value: 'not-applied' },
-              { text: 'Applied', value: 'applied' },
-              { text: 'Interview', value: 'interview' },
-              { text: 'Offer', value: 'offer' },
-              { text: 'Rejected', value: 'rejected' },
-              { text: 'Online Assessment', value: 'oa' },
+              { text: 'Not Applied', value: 'Not Applied' },
+              { text: 'Applied', value: 'Applied' },
+              { text: 'Interview', value: 'Interview' },
+              { text: 'Offer', value: 'Offer' },
+              { text: 'Rejected', value: 'Rejected' },
+              { text: 'Online Assessment', value: 'OA' },
             ],
             filteredValue: filteredInfo.status || null,
             onFilter: (value: string, record) => record.status.includes(value),
           //   sorter: (a, b) => a.address.length - b.address.length,
-          //   sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
+            // sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
             ellipsis: true,
         },
         {
@@ -123,7 +133,7 @@ const Applications = (props : any) => {
             compare: (a, b) => a.deadline.toLowerCase().localeCompare(b.deadline.toLowerCase()),
             multiple: 2,
           },
-        //   sortOrder: sortedInfo.columnKey === 'deadline' ? sortedInfo.order : null,
+          sortOrder: sortedInfo.columnKey === 'deadline' ? sortedInfo.order : null,
           ellipsis: true,
         },
         {
@@ -137,13 +147,13 @@ const Applications = (props : any) => {
 
     return (
         <>
-            <Space style={{ marginBottom: 16 }}>
+            {/* <Space style={{ marginBottom: 16 }}>
                 <Button onClick={clearFilters}>Clear filters</Button>
                 <Button onClick={clearAll}>Clear filters and sorters</Button>
-            </Space>
+            </Space> */}
             <Table columns={columns} dataSource={data} onChange={handleChange} />
         </>
     );
-}
+});
 
 export default Applications;

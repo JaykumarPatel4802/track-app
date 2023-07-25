@@ -15,6 +15,7 @@ import { Application } from './interfaces';
 import uuid from 'react-uuid';
 import { Button, Modal } from 'antd';
 import AddApplicationForm from '@/components/AddApplicationForm';
+import { useRef } from 'react';
 
 export default function Home() {
 
@@ -65,12 +66,15 @@ export default function Home() {
     }
   }
 
+  const ref = useRef();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between lg:flex">
         <Button type='primary' onClick={showModal}>Add Application</Button>
+        <Button type='primary' onClick={() => ref.current.clear()}>Clear Filters</Button>
         <AddApplicationForm handleSubmit={handleSubmit} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} methods={[setName, setDescription, setType, setStatus, setDeadline, setURL]} />
-        <Applications />
+        <Applications ref={ref} />
       </div>
     </main>
   )

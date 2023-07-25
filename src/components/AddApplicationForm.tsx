@@ -24,7 +24,7 @@ const { TextArea } = Input;
 const {Option} = Select;
 
   
-const AddApplicationForm: React.FC = (props: any) => {
+const AddApplicationForm = (props: any) => {
 
     const [form] = Form.useForm();
 
