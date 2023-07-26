@@ -15,6 +15,7 @@ import { Application } from './interfaces';
 import uuid from 'react-uuid';
 import { Button, Modal } from 'antd';
 import AddApplicationForm from '@/components/AddApplicationForm';
+import DeleteApplicationsModal from '@/components/DeleteApplicationsModal';
 import { useRef } from 'react';
 import { Input } from 'antd';
 
@@ -33,6 +34,7 @@ export default function Home() {
   const [showInstruction, setShowInstruction] = React.useState(false);
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isDeleteApplicationsModalOpen, setIsDeleteApplicationsModalOpen] = React.useState(false);
 
   const deleteAllApplications = () => {
     setApplications([]);
@@ -40,6 +42,10 @@ export default function Home() {
 
   const showModal = () => {
     setIsModalOpen(true);
+  };
+
+  const showDeleteApplicationsModal = () => {
+    setIsDeleteApplicationsModalOpen(true);
   };
 
   const CreateApplication = (name: String, description: String, type: String, satus: String, deadline: String, url: String) => {
@@ -76,8 +82,8 @@ export default function Home() {
   const ref = useRef();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between lg:flex">
+    <main className="flex min-h-screen flex-col items-center justify-between">
+      <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between lg:flex mt-24">
         <div className='flex w-full grid grid-cols-2 gap-4'>
           <div className='flex gap-4'>
             <Input placeholder="Search" />
@@ -99,8 +105,10 @@ export default function Home() {
         <Applications ref={ref}  setShowInstruction={setShowInstruction}/>
         <br />
         <div className='flex w-full justify-end'>
-          <Button type='primary' onClick={() => deleteAllApplications()} danger>Delete All Applications</Button>
+        <Button type='primary' onClick={showDeleteApplicationsModal} danger>Delete All Applications</Button>
+          {/* <Button type='primary' onClick={() => deleteAllApplications()} danger>Delete All Applications</Button> */}
         </div>
+        <DeleteApplicationsModal isModalOpen={isDeleteApplicationsModalOpen} setIsModalOpen={setIsDeleteApplicationsModalOpen} deleteAllApplications={deleteAllApplications} />
       </div>
     </main>
   )
