@@ -16,6 +16,7 @@ import uuid from 'react-uuid';
 import { Button, Modal } from 'antd';
 import AddApplicationForm from '@/components/AddApplicationForm';
 import { useRef } from 'react';
+import { Input } from 'antd';
 
 export default function Home() {
 
@@ -30,6 +31,10 @@ export default function Home() {
   const [url, setURL]: any = React.useState('')
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const deleteAllApplications = () => {
+    setApplications([]);
+  }
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -71,10 +76,22 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between lg:flex">
-        <Button type='primary' onClick={showModal}>Add Application</Button>
-        <Button type='primary' onClick={() => ref.current.clear()}>Clear Filters</Button>
+        <div className='flex w-full grid grid-cols-2 gap-4'>
+          <div className='flex gap-4'>
+            <Input placeholder="Search" />
+            <Button onClick={() => ref.current.clear()} danger>Clear Filters</Button>
+          </div>
+          <div className='flex justify-end gap-4'>
+            <Button type='primary' onClick={showModal}>Add Application</Button>
+          </div>
+        </div>
+        <br />
         <AddApplicationForm handleSubmit={handleSubmit} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} methods={[setName, setDescription, setType, setStatus, setDeadline, setURL]} />
         <Applications ref={ref} />
+        <br />
+        <div className='flex w-full justify-end'>
+          <Button type='primary' onClick={() => deleteAllApplications()} danger>Delete All Applications</Button>
+        </div>
       </div>
     </main>
   )

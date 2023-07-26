@@ -23,6 +23,13 @@ interface DataType {
 const Applications = forwardRef((props, ref)  => {
 
     const {applications} = useApplicationContext();
+    const nameFilters = () => {
+        var nameFilters: {text: String, value: String}[] = [];
+        for (var i = 0; i < applications.length; i++) {
+            nameFilters.push({text: applications[i].name, value: applications[i].name});
+        }
+        return nameFilters;
+    }
 
     const ApplicationsList = () => {
         var applicationsList: DataType[] = [];
@@ -53,32 +60,36 @@ const Applications = forwardRef((props, ref)  => {
     const handleChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('Various parameters', pagination, filters, sorter, extra);
         setFilteredInfo(filters);
-        console.log("sortedInfo: ", sortedInfo);
-        console.log("sorter: ", sorter);
         setSortedInfo(sorter as SorterResult<DataType>);
     };
+
 
     const clearFilters = () => {
         setFilteredInfo({});
     };
     
     const clearAll = () => {
+        console.log(data);
         setFilteredInfo({});
         setSortedInfo({});
+        // setData(originalData);
     };
 
     useImperativeHandle(ref, () => ({
         clear() {
-            setFilteredInfo({});
-            setSortedInfo({});
+            clearAll();
         }
     }));
 
+    console.log("nameFilters: ", nameFilters)
     const columns: ColumnsType<DataType> = [
         {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
+          filters: nameFilters(),
+          filteredValue: filteredInfo.name || null,
+          onFilter: (value: string, record) => record.name.includes(value),
           sorter: {
             compare: (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
             multiple: 1,
