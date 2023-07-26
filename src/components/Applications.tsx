@@ -9,6 +9,7 @@ import type { ColumnsType, FilterValue, SorterResult } from 'antd/es/table/inter
 import { Application } from '@/app/interfaces';
 import { useState } from 'react';
 import { forwardRef, useImperativeHandle } from 'react';
+import { Tooltip } from 'antd';
 
 interface DataType {
     key: String,
@@ -29,6 +30,13 @@ const Applications = forwardRef((props, ref)  => {
             nameFilters.push({text: applications[i].name, value: applications[i].name});
         }
         return nameFilters;
+    }
+
+    props.setShowInstruction(false);
+    for (var i = 0; i < applications.length; i++) {
+        if (applications[i].description != "") {
+            props.setShowInstruction(true);
+        }
     }
 
     const ApplicationsList = () => {
@@ -97,12 +105,12 @@ const Applications = forwardRef((props, ref)  => {
           sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
           ellipsis: true,
         },
-        {
-            title: 'Description',
-            dataIndex: 'description',
-            key: 'description',
-            ellipsis: true,
-        },
+        // {
+        //     title: 'Description',
+        //     dataIndex: 'description',
+        //     key: 'description',
+        //     ellipsis: true,
+        // },
         {
             title: 'Type',
             dataIndex: 'type',
@@ -154,7 +162,19 @@ const Applications = forwardRef((props, ref)  => {
             ellipsis: true,
         },
     ];
-    
+
+    const generateExpanable = (record: DataType) => {
+        return (
+            <>
+                {/* <p style={{ margin: 0 }}>{"Name: " + record.name}</p> */}
+                {record.description != "" ? <p style={{ margin: 0 }}>{"Description: " + record.description}</p> : null}
+                {/* <p style={{ margin: 0 }}>{"Type: " + record.type}</p> */}
+                {/* <p style={{ margin: 0 }}>{"Status: " + record.status}</p> */}
+                {record.deadline != "" ? <p style={{ margin: 0 }}>{"Deadline: " + record.deadline}</p> : null}
+                {record.url != "" ? <p style={{ margin: 0 }}>{"URL: " + record.url}</p> : null}
+            </>
+        );
+    }
 
     return (
         <>
@@ -162,7 +182,15 @@ const Applications = forwardRef((props, ref)  => {
                 <Button onClick={clearFilters}>Clear filters</Button>
                 <Button onClick={clearAll}>Clear filters and sorters</Button>
             </Space> */}
-            <Table columns={columns} dataSource={data} onChange={handleChange} />
+            <Table 
+                columns={columns} 
+                expandable={{
+                    expandedRowRender: (record) => generateExpanable(record),
+                    rowExpandable: (record) => record.description != "" || record.url != "",
+                }}
+                dataSource={data} 
+                onChange={handleChange} 
+            />
         </>
     );
 });

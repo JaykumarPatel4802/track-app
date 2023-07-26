@@ -30,6 +30,8 @@ export default function Home() {
   const [deadline, setDeadline]: any = React.useState('')
   const [url, setURL]: any = React.useState('')
 
+  const [showInstruction, setShowInstruction] = React.useState(false);
+
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const deleteAllApplications = () => {
@@ -87,7 +89,14 @@ export default function Home() {
         </div>
         <br />
         <AddApplicationForm handleSubmit={handleSubmit} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} methods={[setName, setDescription, setType, setStatus, setDeadline, setURL]} />
-        <Applications ref={ref} />
+        {showInstruction ?
+          <div className='flex w-full justify-start text-sm'>
+            <p>
+              Note: Click + to view the description of the application!
+            </p>
+          </div>
+        : null}
+        <Applications ref={ref}  setShowInstruction={setShowInstruction}/>
         <br />
         <div className='flex w-full justify-end'>
           <Button type='primary' onClick={() => deleteAllApplications()} danger>Delete All Applications</Button>
