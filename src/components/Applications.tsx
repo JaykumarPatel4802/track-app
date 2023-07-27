@@ -1,7 +1,7 @@
 'use client';
 
 import Data from '@/data/Data';
-import { useContext } from 'react';
+import { use, useContext } from 'react';
 import { useApplicationContext } from '@/app/context/ApplicationContext';
 import type { TableProps } from 'antd';
 import { Button, Space, Table } from 'antd';
@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { forwardRef, useImperativeHandle } from 'react';
 import { Tooltip } from 'antd';
 import { useEffect } from 'react';
+// import { map, includes, sortBy, uniqBy, each, result, get } from "lodash";
 
 interface DataType {
     key: String,
@@ -25,6 +26,7 @@ interface DataType {
 const Applications = forwardRef((props, ref)  => {
 
     const {applications} = useApplicationContext();
+    
     const nameFilters = () => {
         var nameFilters: {text: String, value: String}[] = [];
         for (var i = 0; i < applications.length; i++) {
@@ -48,10 +50,13 @@ const Applications = forwardRef((props, ref)  => {
         if (applications.length == 0) {
             return applicationsList;
         }
+        console.log("applications")
+        console.log(applications)
 
         for (var i = 0; i < applications.length; i++) {
             applicationsList.push({
-                key: i.toString(),
+                // key: i.toString(),
+                key: applications[i].id,
                 name: applications[i].name,
                 description: applications[i].description,
                 type: applications[i].type,
@@ -63,7 +68,40 @@ const Applications = forwardRef((props, ref)  => {
         return applicationsList;
     }
 
-    const data: DataType[] = ApplicationsList();
+    const [data, setData] = useState<DataType[]>(ApplicationsList());
+    useEffect(() => {
+        setData(ApplicationsList());
+    }, [applications]);
+
+    useEffect(() => {
+        // console.log("using effect- ================================")
+        // console.log("applicationsList", ApplicationsList())
+        // setData(ApplicationsList());
+        // console.log(data)
+        const reg = new RegExp(props.searchedValue, "gi");
+        // const filteredData = applications.map((record) => {
+        const filteredData = data.map((record) => {
+            const nameMatch = record?.name?.match(reg);
+            const descriptionMatch = record?.description?.match(reg);
+            const typeMatch = record?.type?.match(reg);
+            const statusMatch = record?.status?.match(reg);
+            const deadlineMatch = record?.deadline?.match(reg);
+            const urlMatch = record?.url?.match(reg);
+            if (!nameMatch && !descriptionMatch && !typeMatch && !statusMatch && !deadlineMatch && !urlMatch) {
+                return null;
+            }
+            return record;
+        }).filter(record => !!record);
+        console.log("filteredData: ", filteredData)
+        if (props.searchedValue) {
+            setData(filteredData);
+        } else {
+            setData(ApplicationsList());
+        }
+    }, [applications, props.searchedValue]); 
+
+    // const data: DataType[] = ApplicationsList();
+
 
     const [filteredInfo, setFilteredInfo] = useState<Record<string, FilterValue | null>>({});
     const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
@@ -106,6 +144,8 @@ const Applications = forwardRef((props, ref)  => {
             multiple: 1,
           },
           sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
+          filterSearch: true,
+          width: '30%',
           ellipsis: true,
         },
         // {
@@ -125,6 +165,7 @@ const Applications = forwardRef((props, ref)  => {
             ],
             filteredValue: filteredInfo.type || null,
             onFilter: (value: string, record) => record.type.includes(value),
+            filterSearch: true,
           //   sorter: (a, b) => a.address.length - b.address.length,
             // sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
             ellipsis: true,
@@ -143,6 +184,7 @@ const Applications = forwardRef((props, ref)  => {
             ],
             filteredValue: filteredInfo.status || null,
             onFilter: (value: string, record) => record.status.includes(value),
+            filterSearch: true,
           //   sorter: (a, b) => a.address.length - b.address.length,
             // sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
             ellipsis: true,

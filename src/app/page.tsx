@@ -23,6 +23,7 @@ export default function Home() {
 
 
   const { applications, addApplication, setApplications } = useApplicationContext();
+  const [searchedValue, setSearchedValue] = React.useState('');
 
   const [name, setName]: any = React.useState('')
   const [description, setDescription]: any = React.useState('')
@@ -79,6 +80,11 @@ export default function Home() {
     }
   }
 
+  const clearAll = (ref) => {
+    ref.current.clear();
+    setSearchedValue('');
+  }
+
   const ref = useRef();
 
   return (
@@ -86,8 +92,8 @@ export default function Home() {
       <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between lg:flex mt-24">
         <div className='flex w-full grid grid-cols-2 gap-4'>
           <div className='flex gap-4'>
-            <Input placeholder="Search" />
-            <Button onClick={() => ref.current.clear()} danger>Clear Filters</Button>
+            <Input placeholder="Search" value={searchedValue} onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {setSearchedValue(e.target.value)}}/>
+            <Button onClick={() => clearAll(ref)} danger>Clear Filters</Button>
           </div>
           <div className='flex justify-end gap-4'>
             <Button type='primary' onClick={showModal}>Add Application</Button>
@@ -102,7 +108,7 @@ export default function Home() {
             </p>
           </div>
         : null}
-        <Applications ref={ref}  setShowInstruction={setShowInstruction}/>
+        <Applications ref={ref} setShowInstruction={setShowInstruction} searchedValue={searchedValue}/>
         <br />
         <div className='flex w-full justify-end'>
         <Button type='primary' onClick={showDeleteApplicationsModal} danger>Delete All Applications</Button>
