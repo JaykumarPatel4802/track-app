@@ -74,12 +74,10 @@ const Applications = forwardRef((props, ref)  => {
     }, [applications]);
 
     useEffect(() => {
-        // console.log("using effect- ================================")
-        // console.log("applicationsList", ApplicationsList())
-        // setData(ApplicationsList());
-        // console.log(data)
+        const apps = ApplicationsList();
+        setData(apps);
+        const data = apps;
         const reg = new RegExp(props.searchedValue, "gi");
-        // const filteredData = applications.map((record) => {
         const filteredData = data.map((record) => {
             const nameMatch = record?.name?.match(reg);
             const descriptionMatch = record?.description?.match(reg);
