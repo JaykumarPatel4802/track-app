@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { forwardRef, useImperativeHandle } from 'react';
 import { Tooltip } from 'antd';
 import { useEffect } from 'react';
+import UpdateApplicationForm from '@/components/UpdateApplicationForm';
 // import { map, includes, sortBy, uniqBy, each, result, get } from "lodash";
 
 interface DataType {
@@ -26,6 +27,8 @@ interface DataType {
 const Applications = forwardRef((props, ref)  => {
 
     const {applications, updateApplication, removeApplication} = useApplicationContext();
+    const [updateFormOpen, setUpdateFormOpen] = useState(false);
+    const [updateTargetApplication, setUpdateTargetApplication] = useState<Application>({} as Application);
     
     const nameFilters = () => {
         var nameFilters: {text: String, value: String}[] = [];
@@ -214,8 +217,14 @@ const Applications = forwardRef((props, ref)  => {
             render: (value) => {
                 return (
                     <div className='flex space-x-5'>
-                        <Button onClick={() => null}>Edit</Button>
-                        <Button onClick={() => removeApplication(value)} danger>Delete</Button>
+                        <Button onClick={() => {
+                            let application = applications.find((application) => application.id == value);
+                            setUpdateTargetApplication(application != undefined ? application : {} as Application);
+                            setUpdateFormOpen(true);
+                        }}>Edit</Button>
+                        <Button onClick={() => {
+                            removeApplication(value)
+                        }} danger>Delete</Button>
                     </div>
                 );
             }
@@ -246,6 +255,7 @@ const Applications = forwardRef((props, ref)  => {
                 dataSource={data} 
                 onChange={handleChange} 
             />
+            <UpdateApplicationForm isModalOpen={updateFormOpen} setIsModalOpen={setUpdateFormOpen} application={updateTargetApplication}/>
         </>
     );
 });
