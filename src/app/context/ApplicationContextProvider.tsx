@@ -14,7 +14,13 @@ const ApplicationContextProvider = ({children}: IProps) => {
         // application.id = applications.length;
         setApplications([...applications, application]);
     };
-    
+    const removeApplication = (id: String) => {
+        setApplications(applications.filter((application) => application.id !== id));
+    };
+    const updateApplication = (id: String, updatedApplication: Application) => {
+        setApplications(applications.map((application) => (application.id === id ? updatedApplication : application)));
+    };
+
     return (
         <ApplicationContext.Provider value={{ applications, addApplication, setApplications }}>
             {children}
