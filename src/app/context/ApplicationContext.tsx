@@ -5,12 +5,16 @@ interface IApplicationContext {
     applications: Application[];
     addApplication: (application: Application) => void;
     setApplications: (applications: Application[]) => void;
+    removeApplication: (id: String) => void;
+    updateApplication: (id: String, updatedApplication: Application) => void;
 }
 
 export const ApplicationContext = createContext<IApplicationContext>({
     applications: [],
     addApplication: (application) => {},
-    setApplications: (applications) => {}
+    setApplications: (applications) => {},
+    removeApplication: (id) => {},
+    updateApplication: (id, updatedApplication) => {},
 });
 
 export const useApplicationContext = () => useContext(ApplicationContext);

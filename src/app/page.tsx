@@ -22,7 +22,7 @@ import { Input } from 'antd';
 export default function Home() {
 
 
-  const { applications, addApplication, setApplications } = useApplicationContext();
+  const { applications, addApplication, setApplications, updateApplication, removeApplication } = useApplicationContext();
   const [searchedValue, setSearchedValue] = React.useState('');
 
   const [name, setName]: any = React.useState('')

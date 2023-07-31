@@ -25,7 +25,7 @@ interface DataType {
 
 const Applications = forwardRef((props, ref)  => {
 
-    const {applications} = useApplicationContext();
+    const {applications, updateApplication, removeApplication} = useApplicationContext();
     
     const nameFilters = () => {
         var nameFilters: {text: String, value: String}[] = [];
@@ -215,7 +215,7 @@ const Applications = forwardRef((props, ref)  => {
                 return (
                     <div className='flex space-x-5'>
                         <Button onClick={() => null}>Edit</Button>
-                        <Button onClick={() => null} danger>Delete</Button>
+                        <Button onClick={() => removeApplication(value)} danger>Delete</Button>
                     </div>
                 );
             }
