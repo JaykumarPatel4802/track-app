@@ -205,6 +205,21 @@ const Applications = forwardRef((props, ref)  => {
             ellipsis: true,
             render: (value) => <a href={value} target="_blank">{value != "" && value != undefined ? "Open" : null}</a>,
         },
+        {
+            title: 'Action',
+            dataIndex: 'key',
+            key: 'key',
+            ellipsis: true,
+            width: '20%',
+            render: (value) => {
+                return (
+                    <div className='flex space-x-5'>
+                        <Button onClick={() => null}>Edit</Button>
+                        <Button onClick={() => null} danger>Delete</Button>
+                    </div>
+                );
+            }
+        }
     ];
 
     const generateExpanable = (record: DataType) => {
