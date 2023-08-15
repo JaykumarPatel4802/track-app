@@ -47,7 +47,7 @@ const UpdateApplicationForm = (props: any) => {
         setStatus(props.application.status);
         setDeadline(props.application.deadline);
         setURL(props.application.url);
-    }, [props.isModalOpen]);
+    }, [props.application.name, props.application.description, props.application.type, props.application.status, props.application.deadline, props.application.url]);
 
     const onChangeName = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setName(e.target.value);
@@ -87,6 +87,8 @@ const UpdateApplicationForm = (props: any) => {
     const handleClear = () => {
         form.resetFields();
     };
+
+    console.log(name, description, type, status, deadline, url)
 
     return (
         <Modal title="Update Application" open={props.isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[

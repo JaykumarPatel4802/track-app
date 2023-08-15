@@ -28,7 +28,7 @@ const Applications = forwardRef((props, ref)  => {
 
     const {applications, updateApplication, removeApplication} = useApplicationContext();
     const [updateFormOpen, setUpdateFormOpen] = useState(false);
-    const [updateTargetApplication, setUpdateTargetApplication] = useState<Application>({} as Application);
+    const [updateTargetApplication, setUpdateTargetApplication] = useState<Application | null>(null);
     
     const nameFilters = () => {
         var nameFilters: {text: String, value: String}[] = [];
@@ -219,7 +219,9 @@ const Applications = forwardRef((props, ref)  => {
                     <div className='flex space-x-5'>
                         <Button onClick={() => {
                             let application = applications.find((application) => application.id == value);
-                            setUpdateTargetApplication(application != undefined ? application : {} as Application);
+                            console.log("tgtApp: ", application)
+                            setUpdateTargetApplication(application != undefined ? application : null);
+                            console.log("updateTargetApplication: ", updateTargetApplication)
                             setUpdateFormOpen(true);
                         }}>Edit</Button>
                         <Button onClick={() => {
@@ -244,6 +246,8 @@ const Applications = forwardRef((props, ref)  => {
         );
     }
 
+    
+
     return (
         <>
             <Table 
@@ -255,7 +259,7 @@ const Applications = forwardRef((props, ref)  => {
                 dataSource={data} 
                 onChange={handleChange} 
             />
-            <UpdateApplicationForm isModalOpen={updateFormOpen} setIsModalOpen={setUpdateFormOpen} application={updateTargetApplication}/>
+            {updateFormOpen && updateTargetApplication && <UpdateApplicationForm isModalOpen={updateFormOpen} setIsModalOpen={setUpdateFormOpen} application={updateTargetApplication} />}
         </>
     );
 });
