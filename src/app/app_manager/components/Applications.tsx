@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { forwardRef, useImperativeHandle } from 'react';
 import { Tooltip } from 'antd';
 import { useEffect } from 'react';
-import UpdateApplicationForm from '@/components/UpdateApplicationForm';
+import UpdateApplicationForm from '@/app/app_manager/components/UpdateApplicationForm';
 // import { map, includes, sortBy, uniqBy, each, result, get } from "lodash";
 
 interface DataType {
