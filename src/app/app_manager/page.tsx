@@ -87,7 +87,7 @@ const ApplicationHome = (props: any) => {
   const ref = useRef();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
+    <main className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-r from-pink-100 from-10% via-white-100 via-50% to-blue-100 to-90%">
       <div className="flex flex-col z-10 w-full max-w-5xl items-center justify-between lg:flex mt-24">
         <div className='flex w-full grid grid-cols-2 gap-4'>
           <div className='flex gap-4'>
