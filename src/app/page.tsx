@@ -16,14 +16,18 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center">
-      <div className='flex absolute inset-0 bg-gradient-to-r from-pink-100 from-10% via-white-100 via-50% to-blue-100 to-90%'>
-        <div className='flex flex-col absolute inset-0 bg-gradient-to-b from-transparent to-white'>
-            <div className='flex flex-col w-screen z-10 justify-between sticky top-0 backdrop-filter backdrop-blur-lg'><Navbar giveChoice={showPage} /></div>
-            <div><Intro /></div>
+      <div className='flex relative'>
+        <div className='flex absolute inset-0 bg-gradient-to-r from-pink-100 from-10% via-white-100 via-50% to-blue-100 to-90%'></div>
+        <div className='flex absolute inset-0 bg-gradient-to-b from-transparent to-white'></div>
+        <div className='flex flex-col inset-0'>
+          <div className='flex flex-col w-screen z-10 justify-between sticky top-0 backdrop-filter backdrop-blur-lg'><Navbar giveChoice={showPage} /></div>
+          <div className='z-10'><Intro /></div>
         </div>
       </div>
-      <div><Features /></div>
-      <div><Intro /></div>
+      <div className='flex flex-col items-center mt-auto'>
+        <div className='w-full'><Features /></div>
+        <div className='w-full'><Intro /></div>
+      </div>
     </main>
   )
 }
