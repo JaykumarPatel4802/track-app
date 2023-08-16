@@ -257,7 +257,7 @@ const Applications = forwardRef((props, ref)  => {
                     rowExpandable: (record) => record.description != "",
                 }}
                 dataSource={data} 
-                onChange={handleChange} 
+                onChange={handleChange}
             />
             {updateFormOpen && updateTargetApplication && <UpdateApplicationForm isModalOpen={updateFormOpen} setIsModalOpen={setUpdateFormOpen} application={updateTargetApplication} />}
         </>
