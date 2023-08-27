@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Menu, Button } from 'antd';
 import { HomeOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
+import { sign } from 'crypto';
 
 const { Header } = Layout;
 
@@ -8,6 +9,21 @@ const Navbar = (props: any) => {
     const callPropFunc = (pageType: String) => {
         console.log("Navbar: callPropFunc: pageType: ", pageType);
         props.giveChoice(pageType);
+    }
+
+    const setSignUp = () => {
+        props.setSignUp(true);
+        props.setLogin(false);
+    }
+
+    const setLogin = () => {
+        props.setLogin(true);
+        props.setSignUp(false);
+    }
+
+    const goHome = () => {
+        props.setLogin(false);
+        props.setSignUp(false);
     }
 
     return (
@@ -32,9 +48,10 @@ const Navbar = (props: any) => {
                 </a>
             </div>
             <div className='flex items-center space-x-5'>
+                {(props.login == true || props.signUp == true) && <Button type="text" onClick={goHome}>Home</Button>}
                 <Button type="text">Pricing</Button>
-                <Button type="primary" style={{ marginRight: '10px' }}>Sign in</Button>
-                <Button>Sign up for free!</Button>
+                {props.login == false && <Button type="primary" style={{ marginRight: '10px' }} onClick={setLogin}>Sign in</Button>}
+                {props.signUp == false && <Button onClick={setSignUp}>Sign up for free!</Button>}
             </div>
         </Header>
     )
